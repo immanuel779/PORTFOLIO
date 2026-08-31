@@ -14,14 +14,19 @@ export default {
           200: '#c7d2fe',
           300: '#a5b4fc',
           400: '#818cf8',
-          500: '#6366f1',
+          500: '#6366f1', // Main Indigo
           600: '#4f46e5',
           700: '#4338ca',
           800: '#3730a3',
           900: '#312e81',
         },
+        secondary: { // Added secondary purple for gradients
+          400: '#a78bfa',
+          500: '#8b5cf6',
+          600: '#7c3aed',
+        },
         accent: {
-          400: '#fb923c', // Orange
+          400: '#fb923c',
           500: '#f97316',
           600: '#ea580c',
         },
@@ -38,6 +43,11 @@ export default {
           900: '#0f172a',
           950: '#020617',
         },
+        light: { // Added light colors so dark: classes work properly
+          50: '#ffffff',
+          100: '#f8fafc',
+          200: '#f1f5f9',
+        }
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
@@ -50,14 +60,22 @@ export default {
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',
+        'float-delay': 'float 6s ease-in-out infinite 2s',
         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'spin-slow': 'spin 20s linear infinite',     // Added this!
+        'spin-slower': 'spin 35s linear infinite',   // Added this!
+        'fade-in': 'fadeIn 1s ease-in-out',          // Added this!
       },
       keyframes: {
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },
           '50%': { transform: 'translateY(-20px)' },
         },
-      },
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        }
+      }
     },
   },
   plugins: [],
