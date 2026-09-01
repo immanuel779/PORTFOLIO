@@ -16,6 +16,11 @@ app.use('/api/projects', require('./routes/projectRoutes'));
 app.use('/api/contact', require('./routes/contactRoutes'));
 app.use('/api/blog', require('./routes/blogRoutes'));
 app.use('/api/newsletter', require('./routes/newsletterRoutes'));
+app.use('/api/skills', require('./routes/skillRoutes'));
+app.use('/api/experiences', require('./routes/experienceRoutes')); // <--- ADD THIS
+app.use('/api/certificates', require('./routes/certificateRoutes')); // <--- ADD THIS
+app.use('/api/settings', require('./routes/settingsRoutes'));
+app.use('/api/skills', require('./routes/skillRoutes'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
