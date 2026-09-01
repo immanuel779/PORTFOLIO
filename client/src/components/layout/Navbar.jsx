@@ -7,9 +7,13 @@ const navLinks = [
   { name: 'Home', path: '/' },
   { name: 'About', path: '/about' },
   { name: 'Services', path: '/services' },
+  { name: 'Skills', path: '/skills' },   
   { name: 'Projects', path: '/projects' },
+  { name: 'Experience', path: '/experience' },   // <--- NEW
+  { name: 'Certificates', path: '/certificates' }, // <--- NEW
   { name: 'Blog', path: '/blog' },
   { name: 'Contact', path: '/contact' },
+ 
 ];
 
 export default function Navbar() {
@@ -68,7 +72,6 @@ export default function Navbar() {
               {isDark ? <Sun className="w-5 h-5 text-yellow-400" /> : <Moon className="w-5 h-5 text-primary-500" />}
             </button>
 
-            {/* FIXED: Downloads actual CV */}
             <a 
               href="/cv.pdf" 
               download="Oluwadamilare_CV.pdf"
@@ -90,7 +93,7 @@ export default function Navbar() {
         </div>
 
         <div className={`lg:hidden transition-all duration-500 overflow-hidden ${
-          isOpen ? 'max-h-96' : 'max-h-0'
+          isOpen ? 'max-h-[600px]' : 'max-h-0'
         }`}>
           <div className="pb-4 space-y-2">
             {navLinks.map((link) => (
@@ -117,7 +120,6 @@ export default function Navbar() {
               {isDark ? 'Light Mode' : 'Dark Mode'}
             </button>
 
-            {/* FIXED: Downloads actual CV */}
             <a 
               href="/cv.pdf" 
               download="Oluwadamilare_CV.pdf"

@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { LayoutDashboard, FolderKanban, MessageSquare, LogOut, Menu, X, FileText, Users } from 'lucide-react'; // <--- Added Users icon
+import { LayoutDashboard, FolderKanban, MessageSquare, LogOut, Menu, X, FileText, Users, Briefcase, Award, Wrench, Settings } from 'lucide-react'; // <--- Added ALL icons
 import axios from 'axios';
 
 export default function AdminDashboard() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [stats, setStats] = useState({ projects: 0, messages: 0, blogs: 0, subscribers: 0 }); // <--- Added subscribers
+  const [stats, setStats] = useState({ projects: 0, messages: 0, blogs: 0, subscribers: 0 });
 
   // Fetch real data from backend
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [projectsRes, messagesRes, blogsRes, subscribersRes] = await Promise.all([ // <--- Added subscribers API
+        const [projectsRes, messagesRes, blogsRes, subscribersRes] = await Promise.all([
           axios.get('http://localhost:5000/api/projects'),
           axios.get('http://localhost:5000/api/contact'),
           axios.get('http://localhost:5000/api/blog'),
@@ -22,7 +22,7 @@ export default function AdminDashboard() {
           projects: projectsRes.data.length,
           messages: messagesRes.data.length,
           blogs: blogsRes.data.length,
-          subscribers: subscribersRes.data.length // <--- SET SUBSCRIBERS
+          subscribers: subscribersRes.data.length
         });
       } catch (error) {
         console.error('Error fetching stats:', error);
@@ -46,7 +46,7 @@ export default function AdminDashboard() {
               <LayoutDashboard className="w-5 h-5" /> Dashboard
             </Link>
             <Link to="/admin/projects" className="flex items-center gap-3 p-3 rounded-lg hover:bg-dark-100 dark:hover:bg-dark-700 transition-colors">
-              <FolderKanban className="w-5 h-5" /> Manage Projects
+              <FolderKanban className="w-5 h-5" /> Projects
             </Link>
             <Link to="/admin/blog" className="flex items-center gap-3 p-3 rounded-lg hover:bg-dark-100 dark:hover:bg-dark-700 transition-colors">
               <FileText className="w-5 h-5" /> Blog
@@ -54,9 +54,22 @@ export default function AdminDashboard() {
             <Link to="/admin/messages" className="flex items-center gap-3 p-3 rounded-lg hover:bg-dark-100 dark:hover:bg-dark-700 transition-colors">
               <MessageSquare className="w-5 h-5" /> Messages
             </Link>
-            {/* ADDED SUBSCRIBERS LINK */}
             <Link to="/admin/subscribers" className="flex items-center gap-3 p-3 rounded-lg hover:bg-dark-100 dark:hover:bg-dark-700 transition-colors">
               <Users className="w-5 h-5" /> Subscribers
+            </Link>
+            
+            {/* NEW LINKS */}
+            <Link to="/admin/skills" className="flex items-center gap-3 p-3 rounded-lg hover:bg-dark-100 dark:hover:bg-dark-700 transition-colors">
+              <Wrench className="w-5 h-5" /> Skills
+            </Link>
+            <Link to="/admin/experience" className="flex items-center gap-3 p-3 rounded-lg hover:bg-dark-100 dark:hover:bg-dark-700 transition-colors">
+              <Briefcase className="w-5 h-5" /> Experience
+            </Link>
+            <Link to="/admin/certificates" className="flex items-center gap-3 p-3 rounded-lg hover:bg-dark-100 dark:hover:bg-dark-700 transition-colors">
+              <Award className="w-5 h-5" /> Certificates
+            </Link>
+            <Link to="/admin/settings" className="flex items-center gap-3 p-3 rounded-lg hover:bg-dark-100 dark:hover:bg-dark-700 transition-colors">
+              <Settings className="w-5 h-5" /> Settings
             </Link>
           </nav>
 
@@ -75,7 +88,6 @@ export default function AdminDashboard() {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <h1 className="text-3xl font-bold mb-6">Dashboard Overview</h1>
           
-          {/* Changed grid to 4 columns for the new stat */}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
             <motion.div className="bg-white dark:bg-dark-800 p-6 rounded-2xl shadow-soft">
               <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center mb-4 text-blue-500">
@@ -101,7 +113,6 @@ export default function AdminDashboard() {
               <p className="text-dark-600 dark:text-dark-300">Total Blog Posts</p>
             </motion.div>
 
-            {/* ADDED SUBSCRIBERS CARD */}
             <motion.div className="bg-white dark:bg-dark-800 p-6 rounded-2xl shadow-soft">
               <div className="w-12 h-12 rounded-xl bg-yellow-500/10 flex items-center justify-center mb-4 text-yellow-500">
                 <Users className="w-6 h-6" />
