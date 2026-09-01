@@ -1,23 +1,28 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios'; // <--- ADDED FOR NEWSLETTER
 import { MapPin, Mail, Phone, Send, CheckCircle, ArrowUp } from 'lucide-react';
-import { FaFacebook, FaInstagram, FaWhatsapp, FaTiktok, FaGithub } from 'react-icons/fa'; // Added FaGithub
+import { FaFacebook, FaInstagram, FaWhatsapp, FaTiktok, FaGithub } from 'react-icons/fa';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
-  const [status, setStatus] = useState('idle'); // 'idle', 'loading', 'success'
+  const [status, setStatus] = useState('idle'); // 'idle', 'loading', 'success', 'error'
 
-  const handleSubscribe = (e) => {
+  const handleSubscribe = async (e) => {
     e.preventDefault();
     if (!email) return;
     setStatus('loading');
 
-    // Simulating an API request (We will connect to the backend in later phases!)
-    setTimeout(() => {
+    try {
+      // Send to your backend / Firebase
+      await axios.post('http://localhost:5000/api/newsletter', { email });
       setStatus('success');
       setEmail('');
-      setTimeout(() => setStatus('idle'), 4000); // Reset after 4 seconds
-    }, 1000);
+      setTimeout(() => setStatus('idle'), 4000);
+    } catch (error) {
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 4000);
+    }
   };
 
   return (
@@ -38,9 +43,9 @@ export default function Footer() {
             {[
               { icon: FaFacebook, link: 'https://www.facebook.com/profile.php?id=100084730695859' },
               { icon: FaInstagram, link: 'https://www.instagram.com/codecraft331?igsi=MWNiejVqdW81MHQxZg==' },
-              { icon: FaWhatsapp, link: 'https://whatsapp.com/channel/0029VbAYte94o7qG2Dfrlt3D' }, // WhatsApp Channel
+              { icon: FaWhatsapp, link: 'https://whatsapp.com/channel/0029VbAYte94o7qG2Dfrlt3D' },
               { icon: FaTiktok, link: 'https://www.tiktok.com/@codecraft995?_r=1&_t=ZS-99LlKyEgS4F' },
-              { icon: FaGithub, link: 'https://github.com/immanuel779' } // Added GitHub
+              { icon: FaGithub, link: 'https://github.com/immanuel779' }
             ].map((social, index) => (
               <a 
                 key={index} 
@@ -79,7 +84,7 @@ export default function Footer() {
               </a>
               <div className="flex items-start gap-3">
                 <Phone className="w-5 h-5 text-primary-500 mt-1" />
-                <p>+234 705 692 2460</p> {/* Second number */}
+                <p>+234 705 692 2460</p>
               </div>
             </div>
           </div>
@@ -112,7 +117,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 4: Newsletter */}
+          {/* Column 4: Newsletter (NOW WORKING) */}
           <div>
             <h3 className="text-xl font-bold mb-6 relative inline-block">
               Newsletter
@@ -140,12 +145,15 @@ export default function Footer() {
                 className={`w-full px-4 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-2 ${
                   status === 'success' 
                     ? 'bg-green-500 hover:bg-green-600' 
+                    : status === 'error'
+                    ? 'bg-red-500 hover:bg-red-600'
                     : 'bg-gradient-to-r from-primary-500 to-secondary-500 hover:opacity-90 hover:scale-[1.02] shadow-premium'
                 }`}
               >
                 {status === 'idle' && (<><Send className="w-4 h-4" /> Subscribe</>)}
                 {status === 'loading' && (<span className="animate-pulse">Subscribing...</span>)}
                 {status === 'success' && (<><CheckCircle className="w-4 h-4" /> Subscribed!</>)}
+                {status === 'error' && (<span>Try again!</span>)}
               </button>
             </form>
           </div>

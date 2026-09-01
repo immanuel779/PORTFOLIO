@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import SectionWrapper from '../components/ui/SectionWrapper';
 import Button from '../components/ui/Button';
-import { Mail, ArrowRight, Download } from 'lucide-react'; 
+import { Mail, ArrowRight, Download } from 'lucide-react';
 // Updated Imports to match your real socials
 import { FaGithub, FaFacebook, FaInstagram, FaTiktok, FaWhatsapp } from 'react-icons/fa';
 
@@ -56,7 +56,8 @@ export default function Home() {
               <span className="gradient-text">Oluwadamilare</span>
               <span className="block gradient-text mt-2 min-h-[1.2em]">{typewriterText}<span className="animate-pulse">|</span></span>
             </h1>
-            <p className="text-lg text-dark-600 dark:text-dark-300 mb-8 max-w-lg mx-auto lg:mx-0">Building premium, performant web applications with React, Node.js, and MongoDB.</p>
+            {/* Updated Tagline to include Lagos */}
+            <p className="text-lg text-dark-600 dark:text-dark-300 mb-8 max-w-lg mx-auto lg:mx-0">Building premium, high-performance web applications and creative digital solutions from Lagos, Nigeria.</p>
             
             {/* Buttons Row */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
@@ -88,7 +89,7 @@ export default function Home() {
             <div className="absolute w-64 h-64 sm:w-80 sm:h-80 rounded-full border-2 border-primary-500/30 animate-spin-slow" />
             <div className="absolute w-72 h-72 sm:w-96 sm:h-96 rounded-full border-2 border-secondary-500/20 animate-spin-slower" />
             
-            {/* Updated to profile.jpeg */}
+            {/* Updated to profile.jpeg - Make sure your file is named exactly this! */}
             <div className="relative w-64 h-64 sm:w-80 sm:h-80 rounded-full overflow-hidden border-4 border-white dark:border-dark-800 shadow-premium bg-dark-100 dark:bg-dark-800">
               <img 
                 src="/profile.jpg" 

@@ -1,13 +1,13 @@
 import { motion } from "framer-motion";
 import SectionHeading from "../components/ui/SectionHeading";
-import { MapPin, Calendar, Award, TrendingUp } from "lucide-react";
+import { MapPin, Calendar } from "lucide-react";
 
 const experiences = [
   {
     role: "Senior Full-Stack Developer",
-    company: "Freelance / Remote",
+    company: "Freelance",
     location: "Lagos, Nigeria",
-    start: "2022",
+    start: "2020",
     end: "Present",
     desc: "Spearheading the end-to-end development of 10+ premium web applications for global clients. Managed the complete SDLC from requirement gathering to deployment, utilizing React, Node.js, Express, and MongoDB. Architected RESTful APIs and implemented JWT authentication, resulting in an average 40% improvement in application load times and a 98% client satisfaction rate.",
     tech: ["React", "Node.js", "Express.js", "MongoDB", "Tailwind CSS"]
@@ -15,39 +15,30 @@ const experiences = [
   {
     role: "Administrative Manager",
     company: "Tech Startup",
-    location: "Remote",
-    start: "2021",
-    end: "2023",
+    location: "Lagos, Nigeria",
+    start: "2025",
+    end: "Present",
     desc: "Orchestrated daily office operations and cross-functional team coordination to ensure seamless business flow. Implemented data-driven administrative strategies and automated reporting systems, reducing operational bottlenecks by 20% and cutting monthly overhead costs by 15%. Managed executive schedules and client communications.",
     tech: ["Operations", "Team Leadership", "Process Optimization"]
   },
   {
     role: "Social Media & Content Strategist",
     company: "Creative Agency",
-    location: "Ogun, Nigeria",
-    start: "2020",
-    end: "2022",
+    location: "Lagos, Nigeria",
+    start: "2025",
+    end: "Present",
     desc: "Crafted and executed comprehensive digital marketing strategies for 6 major brands, boosting their online visibility and audience engagement by over 60% within the first year. Developed viral content campaigns and managed paid advertisements across multiple platforms. Merged creative storytelling with data analytics to drive real business growth.",
     tech: ["Strategy", "Content Creation", "Analytics", "Branding"]
   },
   {
-    role: "UI/UX Designer & Creative Specialist",
-    company: "Creative Agency",
-    location: "Ogun, Nigeria",
-    start: "2020",
-    end: "2021",
-    desc: "Designed user-centric interfaces, wireframes, and high-fidelity prototypes using Figma and Adobe XD. Collaborated closely with developers to ensure pixel-perfect implementation and seamless user experience across mobile, tablet, and desktop devices. Focused heavily on modern minimalism, accessibility, and conversion-optimized design.",
-    tech: ["Figma", "Adobe XD", "Wireframing", "Prototyping"]
-  },
-  {
-    role: "IT Support & Maintenance Specialist",
-    company: "Various Local Businesses",
-    location: "Lagos/Ogun, Nigeria",
-    start: "2019",
-    end: "2020",
-    desc: "Provided comprehensive technical support, system upgrades, and website maintenance to small and medium-sized enterprises. Diagnosed and resolved critical bugs and server issues, ensuring 99.9% uptime. Transformed legacy systems into modern, secure web platforms, making technology more accessible and reliable for non-technical business owners.",
-    tech: ["Web Maintenance", "Troubleshooting", "Security", "Legacy Systems"]
-  },
+    role: "Creative Specialist / Video Editor",
+    company: "Freelance",
+    location: "Lagos, Nigeria",
+    start: "2022",
+    end: "Present",
+    desc: "Produced high-quality visual content and video edits for brands and creators, enhancing their digital presence. Specialized in cinematic video editing, motion graphics, and creative storytelling. Delivered projects that significantly increased viewer retention and engagement across social media platforms.",
+    tech: ["Video Editing", "Motion Graphics", "Creative Direction", "Figma"]
+  }
 ];
 
 export default function Experience() {
@@ -79,7 +70,7 @@ export default function Experience() {
                 </span>
               </div>
 
-              {/* Company & Location */}
+              {/* Company & Location - All set to Lagos */}
               <div className="flex items-center gap-4 mb-4 text-dark-600 dark:text-dark-300">
                 <span className="font-bold text-primary-500 text-lg">{exp.company}</span>
                 <span className="flex items-center"><MapPin className="w-4 h-4 mr-1" /> {exp.location}</span>
@@ -87,11 +78,6 @@ export default function Experience() {
 
               {/* Description */}
               <p className="mb-6 leading-relaxed text-dark-600 dark:text-dark-300">{exp.desc}</p>
-
-              {/* Achievement Badge (Visual Sparkle) */}
-              <div className="flex items-center gap-2 mb-4 text-green-500 dark:text-green-400 font-medium text-sm">
-                <Award className="w-4 h-4" /> Key contributions include streamlining processes and boosting efficiency.
-              </div>
 
               {/* Technologies */}
               <div className="flex flex-wrap gap-2">

@@ -28,24 +28,22 @@ export default function AdminProjects() {
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  // THE EXPERT CLOUDINARY UPLOAD FUNCTION
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
     setUploading(true);
     const data = new FormData();
     data.append('file', file);
-    data.append('upload_preset', 'my_unsigned_preset'); 
-    data.append('cloud_name', 'xlyyuObc'); // Your Cloud Name
+    data.append('upload_preset', 'my_unsigned_preset');
+    data.append('cloud_name', 'xlyyu0bc'); // Correct Cloud Name!
 
     try {
-      const res = await axios.post(`https://api.cloudinary.com/v1_1/xlyyuObc/image/upload`, data);
+      const res = await axios.post(`https://api.cloudinary.com/v1_1/xlyyu0bc/image/upload`, data);
       setImageUrl(res.data.secure_url);
       alert('Image uploaded successfully!');
     } catch (error) {
       console.error('Upload error:', error);
-      alert('Error uploading image. Please check your preset name in Cloudinary.');
+      alert('Error uploading image. Check Cloudinary settings.');
     } finally {
       setUploading(false);
     }
@@ -56,7 +54,7 @@ export default function AdminProjects() {
     try {
       await axios.post('http://localhost:5000/api/projects', {
         ...formData,
-        image: imageUrl, // Uses the uploaded Cloudinary URL
+        image: imageUrl,
         technologies: formData.technologies.split(',').map(t => t.trim())
       }, config);
       alert('Project added successfully!');
@@ -66,12 +64,18 @@ export default function AdminProjects() {
     }
   };
 
+  // ★ UPDATED AND FIXED DELETE FUNCTION ★
   const handleDelete = async (id) => {
     if (confirm('Are you sure you want to delete this project?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/projects/${id}`, config);
+        const response = await axios.delete(`http://localhost:5000/api/projects/${id}`, config);
+        console.log("Delete successful", response.data);
         setProjects(projects.filter(p => p.id !== id));
-      } catch (error) { alert('Error deleting project'); }
+      } catch (error) {
+        // This will show the EXACT error in your browser console
+        console.error("Delete failed:", error.response ? error.response.data : error.message);
+        alert('Error deleting project. Check console for details.');
+      }
     }
   };
 
@@ -89,7 +93,6 @@ export default function AdminProjects() {
             <input type="text" name="category" placeholder="Category (e.g. Full Stack)" required onChange={handleChange} className="w-full px-4 py-2 rounded-lg border border-dark-200 dark:border-dark-700 bg-transparent" />
             <input type="text" name="technologies" placeholder="Technologies (comma separated)" required onChange={handleChange} className="w-full px-4 py-2 rounded-lg border border-dark-200 dark:border-dark-700 bg-transparent" />
             
-            {/* Cloudinary Upload Section */}
             <div className="border-2 border-dashed border-dark-300 dark:border-dark-700 p-4 rounded-lg text-center">
               <label className="block text-sm font-medium mb-2">Upload Project Image</label>
               <div className="flex flex-col items-center gap-2">
@@ -97,7 +100,7 @@ export default function AdminProjects() {
                 <input type="file" accept="image/*" onChange={handleFileUpload} className="text-sm" />
               </div>
               {uploading && <p className="text-primary-500 mt-2">Uploading...</p>}
-              {imageUrl && <p className="text-green-500 mt-2">Image Uploaded! Preview below.</p>}
+              {imageUrl && <p className="text-green-500 mt-2">Image Uploaded!</p>}
             </div>
 
             {imageUrl && (

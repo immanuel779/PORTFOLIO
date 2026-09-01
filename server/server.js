@@ -14,7 +14,8 @@ app.get('/api/health', (req, res) => res.json({ status: 'ok', message: 'Backend 
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/projects', require('./routes/projectRoutes'));
 app.use('/api/contact', require('./routes/contactRoutes'));
-app.use('/api/blog', require('./routes/blogRoutes')); // <--- ADDED BLOG ROUTE
+app.use('/api/blog', require('./routes/blogRoutes'));
+app.use('/api/newsletter', require('./routes/newsletterRoutes'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

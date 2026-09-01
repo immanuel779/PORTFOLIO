@@ -48,7 +48,7 @@ export default function About() {
             Full-Stack Developer, Creative Specialist & Business Problem Solver
           </h3>
           <p className="text-lg text-dark-600 dark:text-dark-300 mb-6 leading-relaxed">
-            Hello! I'm <span className="gradient-text font-semibold">Oluwadamilare Opeyemi</span>—a passionate and versatile professional based in Lagos/Ogun, Nigeria. I am not just a developer; I am a hybrid talent with a proven background in Administration and Social Media Management.
+            Hello! I'm <span className="gradient-text font-semibold">Oluwadamilare Opeyemi</span>—a passionate and versatile professional based in Lagos, Nigeria. I am not just a developer; I am a hybrid talent with a proven background in Administration and Social Media Management.
           </p>
           <p className="text-lg text-dark-600 dark:text-dark-300 mb-6 leading-relaxed">
             My journey began with a deep curiosity for how technology shapes business. Over the last 3+ years, I have mastered the art of building premium, high-performance web applications. But more importantly, I have learned how to bridge the gap between technical execution and business strategy.
