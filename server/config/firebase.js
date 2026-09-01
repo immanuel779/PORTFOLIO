@@ -1,11 +1,16 @@
-const { initializeApp, cert } = require('firebase-admin/app');
-const { getFirestore } = require('firebase-admin/firestore');
-const serviceAccount = require('../serviceAccountKey.json');
+const admin = require('firebase-admin');
 
-const app = initializeApp({
-  credential: cert(serviceAccount)
+let serviceAccount;
+if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+  serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+} else {
+  serviceAccount = require('../serviceAccountKey.json');
+}
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
 });
 
-const db = getFirestore(app);
+const db = admin.firestore();
 
-module.exports = { db };
+module.exports = { admin, db };
