@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Menu, X, Moon, Sun, Download } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
-import Button from '../ui/Button';
 
 const navLinks = [
   { name: 'Home', path: '/' },
@@ -34,11 +33,9 @@ export default function Navbar() {
     }`}>
       <div className="container-premium">
         <div className="flex items-center justify-between h-16 sm:h-20">
-          <Link to="/" className="relative group">
+          <Link to="/" className="relative group flex items-center">
             <span className="text-2xl font-bold text-dark-900 dark:text-white">
-              {'<'}
-              <span className="gradient-text">OP</span>
-              {'/>'}
+              Oluwa<span className="gradient-text">damilare</span>
             </span>
             <span className="absolute -top-1 -right-1 w-2 h-2 bg-primary-500 rounded-full animate-ping" />
           </Link>
@@ -71,11 +68,16 @@ export default function Navbar() {
               {isDark ? <Sun className="w-5 h-5 text-yellow-400" /> : <Moon className="w-5 h-5 text-primary-500" />}
             </button>
 
-            <Button to="/cv.pdf" variant="primary" className="relative">
+            {/* FIXED: Downloads actual CV */}
+            <a 
+              href="/cv.pdf" 
+              download="Oluwadamilare_CV.pdf"
+              className="inline-flex items-center justify-center px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 bg-primary-500 text-white hover:bg-primary-600 focus:ring-primary-500 shadow-premium"
+            >
               <Download className="w-4 h-4 mr-2" />
               Download CV
               <span className="absolute inset-0 rounded-full bg-primary-500 opacity-0 hover:opacity-20 transition-opacity duration-300 blur-md" />
-            </Button>
+            </a>
           </div>
 
           <button 
@@ -115,10 +117,15 @@ export default function Navbar() {
               {isDark ? 'Light Mode' : 'Dark Mode'}
             </button>
 
-            <Button to="/cv.pdf" variant="primary" className="w-full">
+            {/* FIXED: Downloads actual CV */}
+            <a 
+              href="/cv.pdf" 
+              download="Oluwadamilare_CV.pdf"
+              className="w-full flex items-center justify-center px-4 py-3 rounded-lg bg-primary-500 text-white hover:bg-primary-600 transition-all duration-300"
+            >
               <Download className="w-4 h-4 mr-2" />
               Download CV
-            </Button>
+            </a>
           </div>
         </div>
       </div>
