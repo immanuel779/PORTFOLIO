@@ -2,12 +2,11 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
-import WhatsAppButton from './components/ui/WhatsAppButton';
 import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
 import Projects from './pages/Projects';
-import Skills from './pages/Skills'; // <--- ADDED
+import Skills from './pages/Skills';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import Contact from './pages/Contact';
@@ -39,7 +38,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
             <Route path="/projects" element={<Projects />} />
-            <Route path="/skills" element={<Skills />} /> {/* <--- ADDED ROUTE */}
+            <Route path="/skills" element={<Skills />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/contact" element={<Contact />} />
@@ -60,7 +59,6 @@ function App() {
         </main>
 
         {!isAdminRoute && <Footer />}
-        {!isAdminRoute && <WhatsAppButton />}
       </div>
     </ThemeProvider>
   );
