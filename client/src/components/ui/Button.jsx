@@ -1,31 +1,21 @@
-import { Link } from 'react-router-dom';
+import { FaWhatsapp } from 'react-icons/fa';
 
-export default function Button({ 
-  children, 
-  variant = 'primary', 
-  to = null, 
-  href = null, 
-  onClick, 
-  className = '', 
-  type = 'button' 
-}) {
-  const baseClasses = "inline-flex items-center justify-center px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2";
-  
-  const variants = {
-    primary: "bg-primary-500 text-white hover:bg-primary-600 focus:ring-primary-500 shadow-premium",
-    secondary: "bg-transparent border-2 border-primary-500 text-primary-500 dark:text-primary-400 hover:bg-primary-500 hover:text-white dark:hover:bg-primary-500",
-    outline: "bg-transparent border-2 border-dark-300 dark:border-dark-600 text-dark-700 dark:text-light-100 hover:border-primary-500 hover:text-primary-500"
-  };
+export default function WhatsAppButton() {
+  const message = "Hello Oluwadamilare! I found your portfolio and I'd love to chat with you.";
+  const phoneNumber = "2347089584607";
 
-  const classes = `${baseClasses} ${variants[variant]} ${className}`;
-
-  if (to) {
-    return <Link to={to} className={classes}>{children}</Link>;
-  }
-
-  if (href) {
-    return <a href={href} className={classes} target="_blank" rel="noopener noreferrer">{children}</a>;
-  }
-
-  return <button type={type} onClick={onClick} className={classes}>{children}</button>;
+  return (
+    <a
+      href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="fixed bottom-6 right-6 z-50 group"
+      aria-label="Chat on WhatsApp"
+    >
+      <span className="absolute inset-0 rounded-full bg-green-500 animate-ping opacity-75"></span>
+      <div className="relative flex items-center justify-center w-14 h-14 rounded-full bg-green-500 hover:bg-green-600 text-white shadow-lg hover:scale-110 transition-all duration-300">
+        <FaWhatsapp className="w-7 h-7" />
+      </div>
+    </a>
+  );
 }
