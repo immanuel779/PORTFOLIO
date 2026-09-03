@@ -1,28 +1,35 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { LayoutDashboard, FolderKanban, MessageSquare, LogOut, Menu, X, FileText, Users, Briefcase, Award, Wrench, Settings } from 'lucide-react'; // <--- Added ALL icons
+import { LayoutDashboard, FolderKanban, MessageSquare, LogOut, Menu, X, FileText, Users, Briefcase, Award, Wrench, Settings } from 'lucide-react';
 import axios from 'axios';
 
 export default function AdminDashboard() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [stats, setStats] = useState({ projects: 0, messages: 0, blogs: 0, subscribers: 0 });
+  const [stats, setStats] = useState({ projects: 0, messages: 0, blogs: 0, subscribers: 0, skills: 0, experiences: 0, certificates: 0 });
 
-  // Fetch real data from backend
+  // Fetch ALL data from the LIVE backend
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [projectsRes, messagesRes, blogsRes, subscribersRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/projects'),
-          axios.get('http://localhost:5000/api/contact'),
-          axios.get('http://localhost:5000/api/blog'),
-          axios.get('http://localhost:5000/api/newsletter')
+        const baseURL = import.meta.env.VITE_API_URL;
+        const [projectsRes, messagesRes, blogsRes, subscribersRes, skillsRes, experiencesRes, certificatesRes] = await Promise.all([
+          axios.get(`${baseURL}/api/projects`),
+          axios.get(`${baseURL}/api/contact`),
+          axios.get(`${baseURL}/api/blog`),
+          axios.get(`${baseURL}/api/newsletter`),
+          axios.get(`${baseURL}/api/skills`),
+          axios.get(`${baseURL}/api/experiences`),
+          axios.get(`${baseURL}/api/certificates`)
         ]);
         setStats({
           projects: projectsRes.data.length,
           messages: messagesRes.data.length,
           blogs: blogsRes.data.length,
-          subscribers: subscribersRes.data.length
+          subscribers: subscribersRes.data.length,
+          skills: skillsRes.data.length,
+          experiences: experiencesRes.data.length,
+          certificates: certificatesRes.data.length
         });
       } catch (error) {
         console.error('Error fetching stats:', error);
@@ -57,8 +64,6 @@ export default function AdminDashboard() {
             <Link to="/admin/subscribers" className="flex items-center gap-3 p-3 rounded-lg hover:bg-dark-100 dark:hover:bg-dark-700 transition-colors">
               <Users className="w-5 h-5" /> Subscribers
             </Link>
-            
-            {/* NEW LINKS */}
             <Link to="/admin/skills" className="flex items-center gap-3 p-3 rounded-lg hover:bg-dark-100 dark:hover:bg-dark-700 transition-colors">
               <Wrench className="w-5 h-5" /> Skills
             </Link>
@@ -120,6 +125,32 @@ export default function AdminDashboard() {
               <p className="text-3xl font-bold">{stats.subscribers}</p>
               <p className="text-dark-600 dark:text-dark-300">Total Subscribers</p>
             </motion.div>
+
+            {/* NEW STATS FOR SKILLS, EXPERIENCE, CERTIFICATES */}
+            <motion.div className="bg-white dark:bg-dark-800 p-6 rounded-2xl shadow-soft">
+              <div className="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center mb-4 text-orange-500">
+                <Wrench className="w-6 h-6" />
+              </div>
+              <p className="text-3xl font-bold">{stats.skills}</p>
+              <p className="text-dark-600 dark:text-dark-300">Total Skills</p>
+            </motion.div>
+
+            <motion.div className="bg-white dark:bg-dark-800 p-6 rounded-2xl shadow-soft">
+              <div className="w-12 h-12 rounded-xl bg-teal-500/10 flex items-center justify-center mb-4 text-teal-500">
+                <Briefcase className="w-6 h-6" />
+              </div>
+              <p className="text-3xl font-bold">{stats.experiences}</p>
+              <p className="text-dark-600 dark:text-dark-300">Total Experience</p>
+            </motion.div>
+
+            <motion.div className="bg-white dark:bg-dark-800 p-6 rounded-2xl shadow-soft">
+              <div className="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center mb-4 text-red-500">
+                <Award className="w-6 h-6" />
+              </div>
+              <p className="text-3xl font-bold">{stats.certificates}</p>
+              <p className="text-dark-600 dark:text-dark-300">Total Certificates</p>
+            </motion.div>
+
           </div>
         </motion.div>
       </main>
