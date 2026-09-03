@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Lock, Mail, Eye, EyeOff } from 'lucide-react';
-import axios from 'axios'; // <--- IMPORT AXIOS
+import axios from 'axios';
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('');
@@ -18,18 +18,15 @@ export default function AdminLogin() {
     setError('');
 
     try {
-      // Call your backend API
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      // ✅ FIXED: Uses your live Render backend URL
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
         email,
         password
       });
 
       if (response.data.token) {
-        // Save the token (We will use it later for protecting routes)
         localStorage.setItem('adminToken', response.data.token);
         localStorage.setItem('adminEmail', response.data.admin.email);
-        
-        // Redirect to the dashboard
         navigate('/admin/dashboard');
       }
     } catch (err) {
