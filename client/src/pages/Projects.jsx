@@ -12,7 +12,6 @@ export default function Projects() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // ✅ FIXED: Uses live backend
     axios.get(`${import.meta.env.VITE_API_URL}/api/projects`)
       .then(res => {
         setProjects(res.data);
@@ -59,9 +58,25 @@ export default function Projects() {
                     <span key={i} className="px-3 py-1 bg-primary-500/10 text-primary-500 rounded-full text-xs font-medium">{tech}</span>
                   ))}
                 </div>
+
+                {/* ✅ THE BUTTONS SECTION */}
                 <div className="flex justify-between border-t border-dark-100 dark:border-dark-700 pt-4">
-                  <Button href={project.githubUrl} variant="outline"><FaGithub className="w-4 h-4 mr-2" /> Code</Button>
-                  <Button href={project.liveUrl} variant="primary"><ExternalLink className="w-4 h-4 mr-2" /> Live Demo</Button>
+                  <Button 
+                    href={project.githubUrl || '#'} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    variant="outline"
+                  >
+                    <FaGithub className="w-4 h-4 mr-2" /> Code
+                  </Button>
+                  <Button 
+                    href={project.liveUrl || '#'} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    variant="primary"
+                  >
+                    <ExternalLink className="w-4 h-4 mr-2" /> Live Demo
+                  </Button>
                 </div>
               </div>
             </motion.div>
