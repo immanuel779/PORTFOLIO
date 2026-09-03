@@ -13,7 +13,8 @@ export default function BlogPost() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/blog/${slug}`);
+        // ✅ FIXED: Uses your live backend URL
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/blog/${slug}`);
         setPost(res.data);
       } catch (err) {
         setError('Article not found.');
@@ -36,7 +37,6 @@ export default function BlogPost() {
       <div className="max-w-3xl mx-auto">
         <div className="flex items-center gap-2 text-sm text-dark-500 dark:text-dark-400 mb-4">
           <span className="px-3 py-1 bg-primary-500/10 text-primary-500 rounded-full text-xs font-medium">{post.category}</span>
-          {/* FIXED DATE FORMAT */}
           <span className="flex items-center"><Calendar className="w-4 h-4 mr-1" /> {new Date(post.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
         </div>
 

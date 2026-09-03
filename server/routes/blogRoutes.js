@@ -31,6 +31,7 @@ router.get('/:slug', async (req, res) => {
 // POST a new blog (Protected)
 router.post('/', protect, async (req, res) => {
   const { title, excerpt, content, category, image, author } = req.body;
+  // ✅ Auto-generate slug from title if not provided
   const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
   try {
     await db.collection('blog_posts').add({
