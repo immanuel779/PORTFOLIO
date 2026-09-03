@@ -11,13 +11,9 @@ export default function Button({ children, variant = 'primary', to = null, href 
 
   const classes = `${baseClasses} ${variants[variant]} ${className}`;
 
-  if (to) {
-    return <Link to={to} className={classes}>{children}</Link>;
-  }
-
-  if (href) {
-    return <a href={href} className={classes} target={target || '_blank'} rel={rel || 'noopener noreferrer'}>{children}</a>;
-  }
+  if (to) return <Link to={to} className={classes}>{children}</Link>;
+  
+  if (href) return <a href={href} className={classes} target={target || '_blank'} rel={rel || 'noopener noreferrer'}>{children}</a>;
 
   return <button type={type} onClick={onClick} className={classes}>{children}</button>;
 }
