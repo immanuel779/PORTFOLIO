@@ -8,20 +8,32 @@ export default function AdminSkills() {
   const [level, setLevel] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/skills').then(res => setSkills(res.data)).catch(console.error);
+    axios.get(`${import.meta.env.VITE_API_URL}/api/skills`)
+      .then(res => setSkills(res.data))
+      .catch(console.error);
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post('http://localhost:5000/api/skills', { name, level: Number(level) });
-    alert('Skill added!');
-    window.location.reload();
+    try {
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/skills`, { name, level: Number(level) });
+      alert('Skill added!');
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+      alert('Error adding skill');
+    }
   };
 
   const handleDelete = async (id) => {
     if (confirm('Delete this skill?')) {
-      await axios.delete(`http://localhost:5000/api/skills/${id}`);
-      setSkills(skills.filter(s => s.id !== id));
+      try {
+        await axios.delete(`${import.meta.env.VITE_API_URL}/api/skills/${id}`);
+        setSkills(skills.filter(s => s.id !== id));
+      } catch (error) {
+        console.error(error);
+        alert('Error deleting skill');
+      }
     }
   };
 

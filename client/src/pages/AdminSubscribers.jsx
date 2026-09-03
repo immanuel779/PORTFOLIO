@@ -7,25 +7,24 @@ export default function AdminSubscribers() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchSubscribers = async () => {
-      try {
-        const res = await axios.get('http://localhost:5000/api/newsletter');
+    axios.get(`${import.meta.env.VITE_API_URL}/api/newsletter`)
+      .then(res => {
         setSubscribers(res.data);
-      } catch (error) {
-        console.error('Error fetching subscribers:', error);
-      } finally {
         setLoading(false);
-      }
-    };
-    fetchSubscribers();
+      })
+      .catch(err => {
+        console.error('Error fetching subscribers:', err);
+        setLoading(false);
+      });
   }, []);
 
   const handleDelete = async (id) => {
     if (confirm('Remove this subscriber?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/newsletter/${id}`);
+        await axios.delete(`${import.meta.env.VITE_API_URL}/api/newsletter/${id}`);
         setSubscribers(subscribers.filter(s => s.id !== id));
       } catch (error) {
+        console.error(error);
         alert('Error deleting subscriber');
       }
     }

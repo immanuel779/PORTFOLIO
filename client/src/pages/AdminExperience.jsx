@@ -4,18 +4,10 @@ import { Trash2 } from 'lucide-react';
 
 export default function AdminExperience() {
   const [experiences, setExperiences] = useState([]);
-  const [formData, setFormData] = useState({
-    role: '',
-    company: '',
-    location: '',
-    start: '',
-    end: '',
-    desc: '',
-    tech: ''
-  });
+  const [formData, setFormData] = useState({ role: '', company: '', location: '', start: '', end: '', desc: '', tech: '' });
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/experiences')
+    axios.get(`${import.meta.env.VITE_API_URL}/api/experiences`)
       .then(res => setExperiences(res.data))
       .catch(console.error);
   }, []);
@@ -25,13 +17,11 @@ export default function AdminExperience() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/experiences', {
-        ...formData,
-        tech: formData.tech.split(',').map(t => t.trim())
-      });
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/experiences`, { ...formData, tech: formData.tech.split(',').map(t => t.trim()) });
       alert('Experience added!');
       window.location.reload();
     } catch (error) {
+      console.error(error);
       alert('Error adding experience');
     }
   };
@@ -39,9 +29,10 @@ export default function AdminExperience() {
   const handleDelete = async (id) => {
     if (confirm('Delete this experience?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/experiences/${id}`);
+        await axios.delete(`${import.meta.env.VITE_API_URL}/api/experiences/${id}`);
         setExperiences(experiences.filter(exp => exp.id !== id));
       } catch (error) {
+        console.error(error);
         alert('Error deleting experience');
       }
     }
@@ -51,7 +42,6 @@ export default function AdminExperience() {
     <div className="p-6 lg:p-10">
       <h1 className="text-3xl font-bold mb-6">Manage Experience</h1>
       <div className="grid lg:grid-cols-2 gap-8">
-        {/* Form */}
         <div className="bg-white dark:bg-dark-800 p-6 rounded-2xl shadow-soft">
           <h2 className="text-xl font-bold mb-4">Add New Experience</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -67,8 +57,6 @@ export default function AdminExperience() {
             <button type="submit" className="w-full py-3 bg-primary-500 hover:bg-primary-600 text-white rounded-lg font-semibold">Add Experience</button>
           </form>
         </div>
-
-        {/* List */}
         <div className="bg-white dark:bg-dark-800 p-6 rounded-2xl shadow-soft">
           <h2 className="text-xl font-bold mb-4">Existing Experiences ({experiences.length})</h2>
           <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2">
