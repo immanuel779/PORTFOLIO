@@ -11,7 +11,8 @@ export default function Blog() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/blog')
+    // ✅ FIXED: Uses live backend
+    axios.get(`${import.meta.env.VITE_API_URL}/api/blog`)
       .then(res => { setPosts(res.data); setLoading(false); })
       .catch(err => { console.error(err); setLoading(false); });
   }, []);
@@ -30,7 +31,6 @@ export default function Blog() {
               <Link to={`/blog/${post.slug}`} className="block bg-white dark:bg-dark-800 p-6 rounded-2xl shadow-soft hover:shadow-premium transition-all duration-300 hover:-translate-y-2 group h-full">
                 <div className="flex items-center justify-between mb-3">
                   <span className="px-3 py-1 bg-primary-500/10 text-primary-500 rounded-full text-xs font-medium">{post.category}</span>
-                  {/* FIXED DATE FORMAT */}
                   <span className="flex items-center text-sm text-dark-500 dark:text-dark-400"><Calendar className="w-4 h-4 mr-1" /> {new Date(post.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
                 </div>
                 <h3 className="text-xl font-bold mb-3 group-hover:text-primary-500 transition-colors">{post.title}</h3>

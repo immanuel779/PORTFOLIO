@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios'; // <--- IMPORT AXIOS
+import axios from 'axios';
 import SectionWrapper from '../components/ui/SectionWrapper';
 import SectionHeading from '../components/ui/SectionHeading';
 import Button from '../components/ui/Button';
@@ -29,10 +29,9 @@ export default function Contact() {
     const submitter = e.nativeEvent.submitter;
 
     try {
-      // 1. SAVE MESSAGE TO FIREBASE FIRST!
-      await axios.post('http://localhost:5000/api/contact', formData);
+      // ✅ FIXED: Sends to live backend
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/contact`, formData);
       
-      // 2. THEN open WhatsApp or Email
       if (submitter.name === 'whatsapp') {
         const text = `Hello! My name is ${formData.name}. ${formData.message} (Email: ${formData.email})`;
         const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
@@ -55,7 +54,6 @@ export default function Contact() {
     <SectionWrapper id="contact" className="pt-32">
       <SectionHeading title="Contact Me" subtitle="Let's build something amazing together. Reach me instantly via WhatsApp or Email." />
       <div className="grid lg:grid-cols-2 gap-12">
-        {/* Left Side Info (same as before) */}
         <div>
           <h3 className="text-2xl font-bold mb-6">Get in Touch</h3>
           <div className="space-y-6 mb-8">
@@ -69,7 +67,6 @@ export default function Contact() {
           </div>
         </div>
 
-        {/* Form */}
         <div>
           <h3 className="text-2xl font-bold mb-6">Send us a message</h3>
           <form onSubmit={handleSubmit} className="bg-white dark:bg-dark-800 p-8 rounded-2xl shadow-premium space-y-6">
