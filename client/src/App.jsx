@@ -2,6 +2,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
+import ProtectedRoute from './components/ProtectedRoute'; // <--- ADD THIS
 import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
@@ -34,6 +35,7 @@ function App() {
         
         <main className="flex-grow">
           <Routes>
+            {/* Public Routes */}
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
@@ -45,16 +47,17 @@ function App() {
             <Route path="/certificates" element={<Certificates />} />
             <Route path="/experience" element={<Experience />} />
             
+            {/* Admin Routes (Protected!) */}
             <Route path="/admin" element={<AdminLogin />} />
-            <Route path="/admin/dashboard" element={<AdminDashboard />} />
-            <Route path="/admin/projects" element={<AdminProjects />} />
-            <Route path="/admin/messages" element={<AdminMessages />} />
-            <Route path="/admin/blog" element={<AdminBlog />} />
-            <Route path="/admin/subscribers" element={<AdminSubscribers />} />
-            <Route path="/admin/experience" element={<AdminExperience />} />
-            <Route path="/admin/certificates" element={<AdminCertificates />} />
-            <Route path="/admin/skills" element={<AdminSkills />} />
-            <Route path="/admin/settings" element={<AdminSettings />} />
+            <Route path="/admin/dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+            <Route path="/admin/projects" element={<ProtectedRoute><AdminProjects /></ProtectedRoute>} />
+            <Route path="/admin/messages" element={<ProtectedRoute><AdminMessages /></ProtectedRoute>} />
+            <Route path="/admin/blog" element={<ProtectedRoute><AdminBlog /></ProtectedRoute>} />
+            <Route path="/admin/subscribers" element={<ProtectedRoute><AdminSubscribers /></ProtectedRoute>} />
+            <Route path="/admin/experience" element={<ProtectedRoute><AdminExperience /></ProtectedRoute>} />
+            <Route path="/admin/certificates" element={<ProtectedRoute><AdminCertificates /></ProtectedRoute>} />
+            <Route path="/admin/skills" element={<ProtectedRoute><AdminSkills /></ProtectedRoute>} />
+            <Route path="/admin/settings" element={<ProtectedRoute><AdminSettings /></ProtectedRoute>} />
           </Routes>
         </main>
 
