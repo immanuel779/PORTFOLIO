@@ -9,7 +9,8 @@ export default function Skills() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/skills')
+    // ✅ FIXED: Uses your live backend URL from Vercel instead of localhost
+    axios.get(`${import.meta.env.VITE_API_URL}/api/skills`)
       .then(res => {
         setSkills(res.data);
         setLoading(false);
