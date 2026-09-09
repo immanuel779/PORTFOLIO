@@ -15,12 +15,11 @@ router.get('/', async (req, res) => {
 
 // POST a new project
 router.post('/', async (req, res) => {
-  const { title, slug, description, category, technologies, image, githubUrl, liveUrl, featured } = req.body;
-  const generatedSlug = slug || title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-
+  const { title, description, category, technologies, image, githubUrl, liveUrl, featured } = req.body;
   try {
+    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
     await db.collection('projects').add({
-      title, slug: generatedSlug, description, category, technologies, image, githubUrl, liveUrl, 
+      title, slug, description, category, technologies, image, githubUrl, liveUrl,
       featured: featured || false,
       createdAt: new Date().toISOString()
     });
@@ -30,7 +29,23 @@ router.post('/', async (req, res) => {
   }
 });
 
-// DELETE a project (★ THE MISSING PIECE ★)
+// PUT (UPDATE) a project
+router.put('/:id', async (req, res) => {
+  try {
+    const { title, description, category, technologies, image, githubUrl, liveUrl, featured } = req.body;
+    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+    await db.collection('projects').doc(req.params.id).update({
+      title, slug, description, category, technologies, image, githubUrl, liveUrl,
+      featured: featured || false
+    });
+    res.json({ message: 'Project updated successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// DELETE a project
 router.delete('/:id', async (req, res) => {
   try {
     await db.collection('projects').doc(req.params.id).delete();
