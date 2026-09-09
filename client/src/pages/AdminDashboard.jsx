@@ -3,7 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'; // <--- ADD useNavigate
 import { motion } from 'framer-motion';
 import { LayoutDashboard, FolderKanban, MessageSquare, LogOut, Menu, X, FileText, Users, Briefcase, Award, Wrench, Settings } from 'lucide-react';
 import axios from 'axios';
-
+import { Image } from 'lucide-react';
+// Add:
 export default function AdminDashboard() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [stats, setStats] = useState({ projects: 0, messages: 0, blogs: 0, subscribers: 0, skills: 0, experiences: 0, certificates: 0 });
@@ -83,6 +84,7 @@ export default function AdminDashboard() {
             <Link to="/admin/certificates" className="flex items-center gap-3 p-3 rounded-lg hover:bg-dark-100 dark:hover:bg-dark-700 transition-colors">
               <Award className="w-5 h-5" /> Certificates
             </Link>
+             <Link to="/admin/media" className="..."><Image className="w-5 h-5" /> Media Library</Link>
             <Link to="/admin/settings" className="flex items-center gap-3 p-3 rounded-lg hover:bg-dark-100 dark:hover:bg-dark-700 transition-colors">
               <Settings className="w-5 h-5" /> Settings
             </Link>

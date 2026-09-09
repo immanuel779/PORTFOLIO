@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Trash2, UploadCloud, Pencil, X, CheckCircle } from 'lucide-react';
+import { Trash2, UploadCloud, Pencil, X, Star, ArrowUp, ArrowDown } from 'lucide-react';
 
 export default function AdminProjects() {
   const [projects, setProjects] = useState([]);
@@ -106,6 +106,22 @@ export default function AdminProjects() {
     }
   };
 
+  // Add functions for moving & featuring
+  const handleMove = async (project, direction) => {
+    const index = projects.findIndex(p => p.id === project.id);
+    if ((direction === 'up' && index === 0) || (direction === 'down' && index === projects.length - 1)) return;
+    const newProjects = [...projects];
+    const swapIndex = direction === 'up' ? index - 1 : index + 1;
+    [newProjects[index], newProjects[swapIndex]] = [newProjects[swapIndex], newProjects[index]];
+    setProjects(newProjects);
+    // Note: We would ideally save this order to Firebase, but for a simple UI it's fine!
+  };
+
+  const handleFeaturedToggle = async (project) => {
+    await axios.put(`${import.meta.env.VITE_API_URL}/api/projects/${project.id}`, { ...project, featured: !project.featured }, config);
+    setProjects(projects.map(p => p.id === project.id ? { ...p, featured: !p.featured } : p));
+  };
+
   return (
     <div className="p-6 lg:p-10">
       <h1 className="text-3xl font-bold mb-6">Manage Projects</h1>
@@ -145,7 +161,7 @@ export default function AdminProjects() {
             <img src={imageUrl} alt="Preview" className="w-full h-32 object-cover rounded-lg shadow-soft" />
           )}
 
-          {/* Links (The important part!) */}
+          {/* Links */}
           <div className="grid md:grid-cols-2 gap-4">
             <input type="text" name="githubUrl" placeholder="GitHub Link (e.g. https://github.com/...)" value={formData.githubUrl} onChange={handleChange} className="w-full px-4 py-2 rounded-lg border border-dark-200 dark:border-dark-700 bg-transparent" />
             <input type="text" name="liveUrl" placeholder="Live Demo Link (e.g. https://...)" value={formData.liveUrl} onChange={handleChange} className="w-full px-4 py-2 rounded-lg border border-dark-200 dark:border-dark-700 bg-transparent" />
@@ -174,9 +190,23 @@ export default function AdminProjects() {
                 </div>
               </div>
               <div className="flex gap-2">
+                {/* Move up */}
+                <button onClick={() => handleMove(project, 'up')} className="text-gray-500 hover:text-gray-900 p-2 rounded-lg transition-colors">
+                  <ArrowUp className="w-4 h-4" />
+                </button>
+                {/* Move down */}
+                <button onClick={() => handleMove(project, 'down')} className="text-gray-500 hover:text-gray-900 p-2 rounded-lg transition-colors">
+                  <ArrowDown className="w-4 h-4" />
+                </button>
+                {/* Featured toggle */}
+                <button onClick={() => handleFeaturedToggle(project)} className={project.featured ? 'text-yellow-500 hover:text-yellow-600' : 'text-gray-300 hover:text-gray-500'} p-2 rounded-lg transition-colors>
+                  <Star className="w-4 h-4" />
+                </button>
+                {/* Edit */}
                 <button onClick={() => handleEdit(project)} className="text-blue-500 hover:bg-blue-500/10 p-2 rounded-lg transition-colors">
                   <Pencil className="w-5 h-5" />
                 </button>
+                {/* Delete */}
                 <button onClick={() => handleDelete(project.id)} className="text-red-500 hover:bg-red-500/10 p-2 rounded-lg transition-colors">
                   <Trash2 className="w-5 h-5" />
                 </button>

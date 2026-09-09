@@ -23,7 +23,8 @@ import AdminSkills from './pages/AdminSkills';
 import AdminSettings from './pages/AdminSettings';
 import Certificates from './pages/Certificates';
 import Experience from './pages/Experience';
-
+import AdminMedia from './pages/AdminMedia';
+// Add: 
 function App() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
@@ -58,6 +59,7 @@ function App() {
             <Route path="/admin/certificates" element={<ProtectedRoute><AdminCertificates /></ProtectedRoute>} />
             <Route path="/admin/skills" element={<ProtectedRoute><AdminSkills /></ProtectedRoute>} />
             <Route path="/admin/settings" element={<ProtectedRoute><AdminSettings /></ProtectedRoute>} />
+            <Route path="/admin/media" element={<AdminMedia />} />
           </Routes>
         </main>
 
