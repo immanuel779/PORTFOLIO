@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 const { db } = require('../config/firebase');
 
-// GET settings (Public or Admin, but we'll keep it public so the frontend can load it)
+// GET settings
 router.get('/', async (req, res) => {
   try {
     const snapshot = await db.collection('settings').limit(1).get();
     if (snapshot.empty) {
-      return res.json({}); // Return empty object if no settings saved yet
+      return res.json({});
     }
     res.json(snapshot.docs[0].data());
   } catch (error) {
@@ -15,17 +15,15 @@ router.get('/', async (req, res) => {
   }
 });
 
-// PUT / Save settings (Admin only - but since we haven't implemented security middleware here yet, it's just a standard route)
+// PUT / Save settings
 router.put('/', async (req, res) => {
   try {
     const data = req.body;
     const snapshot = await db.collection('settings').limit(1).get();
 
     if (snapshot.empty) {
-      // If no settings exist, create a new document
       await db.collection('settings').add({ ...data });
     } else {
-      // If settings exist, update the existing document
       await db.collection('settings').doc(snapshot.docs[0].id).update({ ...data });
     }
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
-import { User, Settings, Shield, Save, Mail, Briefcase, MapPin, Lock, Globe, Moon, Sun, Link as LinkIcon } from 'lucide-react';
+import { User, Settings, Shield, Save, Mail, Briefcase, MapPin, Lock, Globe, Moon, Sun, Link as LinkIcon, UploadCloud } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
 export default function AdminSettings() {
@@ -9,10 +9,11 @@ export default function AdminSettings() {
   const [settings, setSettings] = useState({
     name: '', email: '', jobTitle: '', location: '',
     github: '', facebook: '', instagram: '', whatsapp: '', tiktok: '', cvUrl: '',
-    seoTitle: '', seoDescription: '',
+    seoTitle: '', seoDescription: '', profileImage: '',
     highContrast: false,
   });
   const [passwords, setPasswords] = useState({ currentPassword: '', newPassword: '' });
+  const [uploading, setUploading] = useState(false);
   const { isDark, toggleTheme } = useTheme();
 
   useEffect(() => {
@@ -23,6 +24,28 @@ export default function AdminSettings() {
 
   const handleChange = (e) => setSettings({ ...settings, [e.target.name]: e.target.value });
   const handlePasswordChange = (e) => setPasswords({ ...passwords, [e.target.name]: e.target.value });
+
+  // Profile Picture Upload (Cloudinary)
+  const handleProfileUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setUploading(true);
+    const data = new FormData();
+    data.append('file', file);
+    data.append('upload_preset', 'my_unsigned_preset');
+    data.append('cloud_name', 'xlyyu0bc');
+
+    try {
+      const res = await axios.post(`https://api.cloudinary.com/v1_1/xlyyu0bc/image/upload`, data);
+      setSettings(prev => ({ ...prev, profileImage: res.data.secure_url }));
+      alert('Profile image uploaded successfully!');
+    } catch (error) {
+      console.error('Upload error:', error);
+      alert('Error uploading image.');
+    } finally {
+      setUploading(false);
+    }
+  };
 
   const handleSubmit = async () => {
     await axios.put(`${import.meta.env.VITE_API_URL}/api/settings`, settings);
@@ -60,6 +83,23 @@ export default function AdminSettings() {
           {activeTab === 'profile' && (
             <div className="bg-white dark:bg-dark-800 p-8 rounded-2xl shadow-soft space-y-4">
               <h2 className="text-xl font-bold flex items-center gap-2"><User className="w-5 h-5" /> Personal Profile</h2>
+              
+              {/* Profile Picture Upload Section */}
+              <div className="flex flex-col items-center gap-3 mb-4">
+                <div className="w-24 h-24 rounded-full border-4 border-primary-500/20 overflow-hidden bg-dark-100 dark:bg-dark-700">
+                  {settings.profileImage ? (
+                    <img src={settings.profileImage} alt="Profile" className="w-full h-full object-cover" />
+                  ) : (
+                    <img src="/profile.jpeg" alt="Profile" className="w-full h-full object-cover" />
+                  )}
+                </div>
+                <label className="text-sm text-primary-500 hover:underline cursor-pointer flex items-center gap-1">
+                  <UploadCloud className="w-4 h-4" />
+                  {uploading ? 'Uploading...' : 'Change Picture'}
+                  <input type="file" accept="image/*" onChange={handleProfileUpload} className="hidden" />
+                </label>
+              </div>
+
               <input type="text" name="name" placeholder="Name" value={settings.name} onChange={handleChange} className="w-full p-3 rounded-lg bg-transparent border" />
               <input type="text" name="email" placeholder="Email" value={settings.email} onChange={handleChange} className="w-full p-3 rounded-lg bg-transparent border" />
               <input type="text" name="jobTitle" placeholder="Job Title" value={settings.jobTitle} onChange={handleChange} className="w-full p-3 rounded-lg bg-transparent border" />
